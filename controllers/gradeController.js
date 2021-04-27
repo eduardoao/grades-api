@@ -49,7 +49,7 @@ var gradeController = {
        showByName: function (req, res) {
         var name = req.params.name;
 
-        gradeModel.findOne({name: name}, function (err, grade) {
+        gradeModel.find({name: name}, function (err, grade) {
             if (err) {
                 return res.status(500).json({
                     message: 'Erro ao localizar a grade!',
