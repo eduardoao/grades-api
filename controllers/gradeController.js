@@ -46,7 +46,7 @@ var gradeController = {
       /**
      * gradeController.showByName()
      */
-       show: function (req, res) {
+       showByName: function (req, res) {
         var name = req.params.name;
 
         gradeModel.findOne({name: name}, function (err, grade) {

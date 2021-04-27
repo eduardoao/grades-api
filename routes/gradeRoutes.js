@@ -16,7 +16,7 @@ router.get('/:id', gradeController.show);
 /*
 * GET By Name
 */
-router.get('/:name', gradeController.showByName);
+router.get('name/:name', gradeController.showByName);
 
 /*
  * POST
