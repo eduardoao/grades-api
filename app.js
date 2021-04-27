@@ -23,29 +23,17 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.use(
-//   cors({
-//     origin: 'https://pure-anchorage-24580.herokuapp.com',
-//   })
-// );
+app.use(
+  cors({
+    origin: 'http://localhost:3000/',
+  })
+);
 
-
-// Set up a whitelist and check against it:
-var whitelist = ['https://pure-anchorage-24580.herokuapp.com']
-
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
-
-
-// Then pass them to cors:
-app.use(cors(corsOptions));
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 app.get('/', (req, res) => {
   res.send('API em execucao');
