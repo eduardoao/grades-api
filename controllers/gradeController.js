@@ -42,6 +42,31 @@ var gradeController = {
         });
     },
 
+
+      /**
+     * gradeController.showByName()
+     */
+       show: function (req, res) {
+        var name = req.params.name;
+
+        gradeModel.findOne({name: name}, function (err, grade) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Erro ao localizar a grade!',
+                    error: err
+                });
+            }
+
+            if (!grade) {
+                return res.status(404).json({
+                    message: 'Grade não localizada!'
+                });
+            }
+
+            return res.json(grade);
+        });
+    },
+
     /**
      * gradeController.create()
      */

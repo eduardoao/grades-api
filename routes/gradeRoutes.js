@@ -14,6 +14,11 @@ router.get('/', gradeController.list);
 router.get('/:id', gradeController.show);
 
 /*
+* GET By Name
+*/
+router.get('/:name', gradeController.showByName);
+
+/*
  * POST
  */
 router.post('/', gradeController.create);
