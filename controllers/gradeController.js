@@ -1,4 +1,5 @@
-import {gradeModel} from '../models/gradeModel.js';
+import  {gradeModel}  from '../models/gradeModel.js';
+
 var gradeController = {
 
     /**
@@ -23,7 +24,7 @@ var gradeController = {
     show: function (req, res) {
         var id = req.params.id;
 
-        mongoose.findOne({_id: id}, function (err, grade) {
+        gradeModel.findOne({_id: id}, function (err, grade) {
             if (err) {
                 return res.status(500).json({
                     message: 'Erro ao localizar a grade!',
@@ -45,24 +46,26 @@ var gradeController = {
      * gradeController.create()
      */
     create: function (req, res) {
-        var grade = new GradeModel({
+        var grade = new gradeModel({
 			name : req.body.name,
 			subject : req.body.subject,
 			type : req.body.type,
 			value : req.body.value,
 			lastModified : req.body.lastModified
         });
+     
 
-        mongoose.save(function (err, grade) {
-            if (err) {
-                return res.status(500).json({
-                    message: $`Erro ao criar a grade {grade.name}`,
-                    error: err
-                });
-            }
+            gradeModel.create(function(err, grade){
+                if (err) {
+                    return res.status(500).json({
+                        message: $`Erro ao criar a grade: {grade.name}`,
+                        error: err
+                    });
+                }
 
+            } );
             return res.status(201).json(grade);
-        });
+        //});
     },
 
     /**
@@ -71,7 +74,7 @@ var gradeController = {
     update: function (req, res) {
         var id = req.params.id;
 
-        mongoose.findOne({_id: id}, function (err, grade) {
+        gradeModel.findOne({_id: id}, function (err, grade) {
             if (err) {
                 return res.status(500).json({
                     message: 'Erro ao tentar localizar a grade.',
@@ -85,19 +88,22 @@ var gradeController = {
                 });
             }
 
+            grade.id = id;
             grade.name = req.body.name ? req.body.name : grade.name;
 			grade.subject = req.body.subject ? req.body.subject : grade.subject;
 			grade.type = req.body.type ? req.body.type : grade.type;
 			grade.value = req.body.value ? req.body.value : grade.value;
 			grade.lastModified = req.body.lastModified ? req.body.lastModified : grade.lastModified;
 			
-            grade.save(function (err, grade) {
+
+            gradeModel.updateOne({"_id": grade.id}, {$set: grade },
+            function (err,  grade) {
                 if (err) {
                     return res.status(500).json({
                         message: 'Erro ao tentar atualizar a grade.',
                         error: err
                     });
-                }
+                };
 
                 return res.json(grade);
             });
@@ -110,7 +116,7 @@ var gradeController = {
     remove: function (req, res) {
         var id = req.params.id;
 
-        mongoose.findByIdAndRemove(id, function (err, grade) {
+        gradeModel.findOneAndRemove(id, function (err, grade) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error ao tentar excluir a grade.',

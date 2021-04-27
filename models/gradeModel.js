@@ -9,6 +9,6 @@ var gradeSchema = new Schema({
 	'lastModified' : Date
 });
 
-const gradeModel = mongoose.model('grade', gradeSchema, 'grade');
+const gradeModel = mongoose.model('model', gradeSchema, 'grade');
 
 export {gradeModel};
